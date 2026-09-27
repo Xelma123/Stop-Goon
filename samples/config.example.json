@@ -1,0 +1,6 @@
+{
+  "redirectUrl": "https://www.youtube.com/watch?v=jkpBEwzAxPo&t=0s",
+  "blocklistFiles": ["blocklist.txt", "lists/porn-only.txt"],
+  "proxyPort": 8899,
+  "pacPort": 8898
+}

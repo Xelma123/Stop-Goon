@@ -2,18 +2,19 @@
 
 Only AutoConfigURL is ever touched; ProxyServer/ProxyEnable never are.
 
-Phase 1 CLI (run from the repo root):
+Manual CLI until install.py exists (run from the repo root):
     py -m stopgoon.winsys show
     py -m stopgoon.winsys set <version>
     py -m stopgoon.winsys clear
 """
 
 import ctypes
+import re
 import sys
 import winreg
 
 INTERNET_SETTINGS = r"Software\Microsoft\Windows\CurrentVersion\Internet Settings"
-PAC_URL_PREFIX = "http://127.0.0.1:8898/stopgoon.pac"
+_OURS_RE = re.compile(r"^http://127\.0\.0\.1:\d+/stopgoon\.pac(\?.*)?$")
 INTERNET_OPTION_REFRESH = 37
 INTERNET_OPTION_SETTINGS_CHANGED = 39
 
@@ -27,8 +28,12 @@ def get_autoconfig_url() -> str | None:
     return value or None
 
 
+def pac_url(port: int, version: str) -> str:
+    return f"http://127.0.0.1:{port}/stopgoon.pac?v={version}"
+
+
 def is_ours(url: str | None) -> bool:
-    return bool(url) and url.split("?", 1)[0] == PAC_URL_PREFIX
+    return bool(url) and _OURS_RE.match(url) is not None
 
 
 def set_autoconfig_url(url: str) -> None:
@@ -68,7 +73,7 @@ def _main(argv: list[str]) -> int:
     if cmd == "show":
         print(f"AutoConfigURL: {get_autoconfig_url() or '(yok)'}")
     elif cmd == "set" and len(argv) == 2:
-        url = f"{PAC_URL_PREFIX}?v={argv[1]}"
+        url = pac_url(8898, argv[1])
         try:
             set_autoconfig_url(url)
         except PermissionError as e:

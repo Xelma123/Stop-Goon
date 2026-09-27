@@ -1,0 +1,11 @@
+# ── Reddit ──────────────────────────────────────────
+# Alt domainler otomatik engellenir (www., old., i.redd.it, v.redd.it ...)
+reddit.com
+redd.it
+redditmedia.com
+reddit.app.link
+
+# ── Kişisel eklemeler ───────────────────────────────
+
+# ── İsteğe bağlı: Google Çeviri site proxy'si ───────
+# translate.goog

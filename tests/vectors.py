@@ -1,6 +1,6 @@
 """Shared matcher vectors for the Python matcher and the generated PAC (§8.3)."""
 
-DOMAINS = {"site.com", "reddit.com", "redd.it", "xn--bcher-kva.example"}
+DOMAINS = {"site.com", "reddit.com", "redd.it", "xn--bcher-kva.example", "1.2.3.4"}
 
 VECTORS = [
     ("site.com", True),
@@ -17,5 +17,8 @@ VECTORS = [
     ("xn--bcher-kva.example", True),
     ("www.xn--bcher-kva.example", True),
     ("youtube.com", False),
+    ("www.youtube.com", False),
     ("localhost", False),
+    ("1.2.3.4", True),
+    ("11.2.3.4", False),
 ]
